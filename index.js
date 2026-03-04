@@ -1,8 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 
 const app = express();
 const PORT = 3000;
+dotenv.config({ quiet: true })
+
+await connectDB();
 
 app.get("/", (req, res) => {
     return res.json({ 
