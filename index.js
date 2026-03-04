@@ -1,12 +1,17 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import {AuthRoutes} from './routes/index.js';
 
 const app = express();
 const PORT = 3000;
 dotenv.config({ quiet: true })
 
+app.use(express.json());
+
 await connectDB();
+
+app.use('/auth', AuthRoutes);
 
 app.get("/", (req, res) => {
     return res.json({ 
