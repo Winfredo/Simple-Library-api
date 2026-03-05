@@ -7,16 +7,16 @@ import User from "../models/User.js";
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "No user ID provided. Please log in.",
-      });
+        message: "Unauthorized.",
+     });
     }
 
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
-        message: "User not found. Please log in again.",
+        message: "Unauthorized.",
       });
     }
 
@@ -26,7 +26,7 @@ import User from "../models/User.js";
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Authentication error",
+      message: "Internal server error.",
       error: error.message,
     });
   }
