@@ -14,7 +14,11 @@ export const signupSchema = joi.object({
         'string.min': 'Password must be at least 6 characters long',
         'string.pattern.base': 'Password must contain at least one uppercase letter and one special character',
         'string.empty': 'Password is required',
+    }),
+    role: joi.string().valid('librarian', 'student').messages({
+        'string.only': 'Role must be either librarian or student',
     })
+
 });
 
 export const loginSchema = joi.object({

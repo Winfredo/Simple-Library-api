@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import {AuthRoutes} from './routes/index.js';
+import {BookRoutes} from './routes/index.js';
 
 const app = express();
 const PORT = 3000;
@@ -12,6 +13,7 @@ app.use(express.json());
 await connectDB();
 
 app.use('/auth', AuthRoutes);
+app.use('/books', BookRoutes);
 
 app.get("/", (req, res) => {
     return res.json({ 

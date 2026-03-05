@@ -14,12 +14,12 @@ class AuthService {
         return user
     }
 
-    static async signup({username, email, password}) {
+    static async signup({username, email, password, role}) {
         const isExisting = await this.isUserExisting(email)
         if(isExisting){
             return null
         }
-        const user = await Person.create({username, email, password})
+        const user = await Person.create({username, email, password, role})
         return user
     }
 
