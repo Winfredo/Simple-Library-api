@@ -19,7 +19,7 @@ const userLogin = async (req, res) => {
         const user = await AuthService.login(payload)
 
         if(!user){
-            return res.status(400).json({ success: false, message: 'Invalid username or password' })
+            return res.status(401).json({ success: false, message: 'Invalid username or password' })
         }
         res.json({ success: true, message: 'Login successful', user })
     } catch (error) {
