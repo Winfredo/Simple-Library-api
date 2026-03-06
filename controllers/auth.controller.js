@@ -4,8 +4,8 @@ const userSignup = async (req,res) => {
     try {
         const payload = req.body;
         const user = await AuthService.signup(payload)
-        if(!user){
-            return res.status(400).json({ success: false, message: 'User already exists' })
+        if(user){
+            return res.status(409).json({ success: false, message: 'User already exists' })
         }
         res.json({ success: true, message: 'Signup successful', user })
     } catch (error) {

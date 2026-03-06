@@ -14,7 +14,7 @@ import User from "../models/User.js";
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         message: "Unauthorized.",
       });
@@ -36,7 +36,7 @@ import User from "../models/User.js";
     if (req.user.role !== 'librarian') {
         return res.status(403).json({ 
             success: false, 
-            message: 'Access denied. Only librarians can perform this action.' 
+            message: 'Forbidden. Librarian access required.' 
         })
     }
     
