@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import {AuthRoutes} from './routes/index.js';
 import {BookRoutes} from './routes/index.js';
+import ErrorHandler from './middlewares/ErrorHandler.js';
 
 const app = express();
 const PORT = 3000;
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
      })
 })
 
+app.use(ErrorHandler)
 app.listen(PORT, ()=> {
     console.log(`Server is running on port ${PORT}`);
 })
