@@ -14,13 +14,13 @@ const getAllBooks = async(req,res) => {
     }
 }
 
-const createBook = async(req,res) => {
+const createBook = async(req,res,next) => {
     try {
         const payload = req.body;
         const book = await BookService.createBook(payload);
 
         if (!book){
-            const error = new Error('Book creation failed')
+            const error = new Error('Book creation failed. Book may already exist.')
             error.status = 400
             return next(error)
         }
@@ -31,7 +31,7 @@ const createBook = async(req,res) => {
 
 }
 
-const getBookById = async(req,res) => {
+const getBookById = async(req,res,next) => {
     try {
         const {id} = req.params;
         const book = await BookService.getBookById(id);
@@ -46,7 +46,7 @@ const getBookById = async(req,res) => {
     }
 }
 
-const updateBook = async(req,res) => {
+const updateBook = async(req,res,next) => {
     try{
         const {id} = req.params;
         const updateData = req.body;
@@ -62,7 +62,7 @@ const updateBook = async(req,res) => {
     }
 }
 
-const deleteBook = async(req,res) => {
+const deleteBook = async(req,res,next) => {
     try {
         const {id} = req.params;
         const book = await BookService.deleteBook(id);
