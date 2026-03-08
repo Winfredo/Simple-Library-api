@@ -5,11 +5,13 @@ const userSignup = async (req,res) => {
         const payload = req.body;
         const user = await AuthService.signup(payload)
         if(user){
-            return res.status(409).json({ success: false, message: 'User already exists' })
+            const error = new Error('User already exists')
+           error.status = 409
+           return next(error) 
         }
         res.json({ success: true, message: 'Signup successful', user })
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        return next(error)
     }
 }
 
@@ -19,11 +21,13 @@ const userLogin = async (req, res) => {
         const user = await AuthService.login(payload)
 
         if(!user){
-            return res.status(401).json({ success: false, message: 'Invalid username or password' })
+            const error = new Error('Invalid username or password')
+            error.status = 401
+            return next(error)
         }
         res.json({ success: true, message: 'Login successful', user })
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        return next(error)
     }
 }
 
@@ -32,11 +36,13 @@ const userDelete = async (req, res) => {
         const { id } = req.params;
         const user = await AuthService.userDelete(id)
         if(!user){
-            return res.status(404).json({ success: false, message: 'User not found' })
+            const error = new Error('User not found')
+            error.status = 404
+            return next(error)
         }
         res.json({ success: true, message: 'User deleted successfully', user })
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        return next(error)
     }
 }
 

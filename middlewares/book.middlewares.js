@@ -5,39 +5,32 @@ import User from "../models/User.js";
     const userId = req.headers["x-user-id"];
 
     if (!userId) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized.",
-     });
+        const error = new Error('Unauthorized')
+        error.status = 401
+        return next(error)
     }
 
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized.",
-      });
+        const error = new Error('Unauthorized')
+        error.status = 401
+        return next(error)
     }
 
     req.user = user;
 
     next();
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Internal server error.",
-      error: error.message,
-    });
+    next(error)
   }
 };
 
  const checkIfLibrarian = (req, res, next) => {    
     if (req.user.role !== 'librarian') {
-        return res.status(403).json({ 
-            success: false, 
-            message: 'Forbidden. Librarian access required.' 
-        })
+            const error = new Error('Forbidden')
+            error.status = 403
+            return next(error)
     }
     
     next()
