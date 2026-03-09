@@ -5,7 +5,7 @@ import { createBook, getAllBooks, getBookById, updateBook, deleteBook } from '..
 
 router.get('/', checkIfLoggedIn, getAllBooks);
 router.post('/new',checkIfLoggedIn, checkIfLibrarian, createBook)
-router.get('/:id',checkIfLoggedIn, getBookById)
+router.get('/:id',checkIfLoggedIn,  getBookById)
 router.put('/:id',checkIfLoggedIn, checkIfLibrarian,updateBook)
 router.delete('/:id',checkIfLoggedIn, checkIfLibrarian, deleteBook)
 
