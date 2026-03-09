@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
         enum: ['librarian', 'student'],
         default: 'student'
     },
+    token: { 
+        type: String,
+    },
+    lastLogin: { type: Date }
 })
 
 const Person = mongoose.model('User', userSchema);
