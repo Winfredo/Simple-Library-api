@@ -1,14 +1,14 @@
+import mongoose from 'mongoose';
 import BookService from '../services/book.service.js'
 
-const getAllBooks = async(req,res) => {
+const getAllBooks = async(req, res, next) => {
     try {
         const books = await BookService.getAllBooks();
-        if(books.length === 0){
-            const error = new Error('No book found')
-            error.status = 404
-            return next(error)
-        }
-        res.json(books);
+        res.json({
+            success: true,
+            message: 'Books retrieved successfully',
+            data: books || []
+        });
     } catch (error) {
         return next(error)
     }
@@ -34,6 +34,12 @@ const createBook = async(req,res,next) => {
 const getBookById = async(req,res,next) => {
     try {
         const {id} = req.params;
+
+        if(!id || ! mongoose.Types.ObjectId.isValid(id)){
+            const error = new Error('Invalid book ID')
+            error.status = 400
+            return next(error)
+        }
         const book = await BookService.getBookById(id);
         if(!book){
             const error = new Error('Book not found')
