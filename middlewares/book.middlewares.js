@@ -1,24 +1,29 @@
 import User from "../models/User.js";
+import { VerifyAuthToken } from "../utils/auth.js";
 
  const checkIfLoggedIn = async (req, res, next) => {
   try {
-    const userId = req.headers["x-user-id"];
-
-    if (!userId) {
-        const error = new Error('Unauthorized')
-        error.status = 401
-        return next(error)
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      const error = new Error('Unauthorized')
+      error.status = 401
+      return next(error)
     }
 
-    const user = await User.findById(userId);
+    const token = authHeader.split(' ')[1];
 
-    if (!user) {
-        const error = new Error('Unauthorized')
-        error.status = 401
-        return next(error)
+    // verify token;
+    const payload = VerifyAuthToken(token);
+    if (!payload) {
+      const error = new Error('Unauthorized')
+      error.status = 401
+      return next(error)
+    } 
+
+    req.user = {
+        id: payload.userId,
+        role: payload.role
     }
-
-    req.user = user;
 
     next();
   } catch (error) {
