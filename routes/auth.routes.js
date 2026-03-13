@@ -7,4 +7,4 @@ router.post('/register', validateSignup, userSignup)
 router.post('/login', validateLogin, userLogin)
 router.delete('/:id', validateObjectId('id'), userDelete)
 
-export default router;
+export default router; 
