@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import connectDB from './config/db.js';
 import {AuthRoutes} from './routes/index.js';
 import {BookRoutes} from './routes/index.js';
@@ -10,6 +11,7 @@ const PORT = 3000;
 dotenv.config({ quiet: true })
 
 app.use(express.json());
+app.use(cors());
 
 await connectDB();
 
