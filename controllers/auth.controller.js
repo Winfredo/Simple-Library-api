@@ -5,7 +5,7 @@ const userSignup = async (req, res, next) => {
   try {
     const payload = req.body;
     const user = await AuthService.signup(payload);
-    if (user) {
+    if (!user) {
       const error = new Error("User already exists");
       error.status = 409;
       return next(error);
