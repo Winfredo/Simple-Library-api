@@ -34,14 +34,12 @@ class BookService {
     return book;
   }
 
- static async updateBook(bookId, updateData) {
-    const book = await Book.findByIdAndUpdate(
-        bookId,
-        updateData,
-        { new: true }
-    );
+  static async updateBook(bookId, updateData) {
+    const book = await Book.findByIdAndUpdate(bookId, updateData, {
+      new: true,
+    });
     return book;
-}
+  }
 
   static async deleteBook(id) {
     const book = await Book.findByIdAndDelete(id);
