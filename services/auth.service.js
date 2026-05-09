@@ -5,10 +5,14 @@ import {
 } from "../utils/auth.js";
 
 class AuthService {
+
+    //logic to find a particular mail.
   static async isUserExisting(email) {
     const user = await Person.findOne({ email });
     return !!user;
   }
+
+  //logic for login
   static async login({ username, password }) {
     const user = await Person.findOne({ username }).select(
       "name email age password lastLogin role",
