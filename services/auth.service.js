@@ -32,6 +32,7 @@ class AuthService {
     return user;
   }
 
+  //signup logic
   static async signup({ username, email, password, role }) {
     const isExisting = await this.isUserExisting(email);
     if (isExisting) {
@@ -47,6 +48,7 @@ class AuthService {
     return user;
   }
 
+//logic to delete a user
   static async userDelete(id) {
     const user = await Person.findByIdAndDelete(id);
     return user;
