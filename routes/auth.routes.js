@@ -2,6 +2,8 @@ import express from "express";
 const router = express.Router();
 import {validateSignup, validateLogin, validateObjectId} from '../middlewares/index.js'
 import {userSignup, userLogin,userDelete} from '../controllers/index.js'
+import rateLimit from "express-rate-limit";
+
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
