@@ -5,6 +5,8 @@ import connectDB from './config/db.js';
 import {AuthRoutes} from './routes/index.js';
 import {BookRoutes} from './routes/index.js';
 import ErrorHandler from './middlewares/ErrorHandler.js';
+import { limiter } from "./middlewares/rateLimiter.js";
+
 
 const app = express();
 const PORT = 3000;
@@ -12,7 +14,7 @@ dotenv.config({ quiet: true })
 
 app.use(express.json());
 app.use(cors());
-
+app.use(limiter);
 await connectDB();
 
 app.use('/auth', AuthRoutes);
