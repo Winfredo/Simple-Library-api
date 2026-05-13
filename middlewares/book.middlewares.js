@@ -31,6 +31,15 @@ const checkIfLoggedIn = async (req, res, next) => {
   }
 };
 
+const checkIfStudent = (req, res, next) => {
+  if (req.user.role !== "student") {
+    const error = new Error("Forbidden");
+    error.status = 403;
+    return next(error);
+  }
+  next();
+};
+
 const checkIfLibrarian = (req, res, next) => {
   if (req.user.role !== "librarian") {
     const error = new Error("Forbidden");
@@ -40,4 +49,4 @@ const checkIfLibrarian = (req, res, next) => {
 
   next();
 };
-export { checkIfLoggedIn, checkIfLibrarian };
+export { checkIfLoggedIn, checkIfLibrarian, checkIfStudent };
