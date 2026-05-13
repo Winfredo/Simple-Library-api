@@ -13,7 +13,7 @@ class BorrowService {
     }
 
     const dueDate = new Date();
-    dueDate.setDate(dueDate.getDate() + 14);
+    dueDate.setDate(dueDate.getDate() + 10);
     
     
     const borrowRecord = await Borrow.create({
