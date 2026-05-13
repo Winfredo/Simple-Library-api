@@ -6,7 +6,7 @@ import {AuthRoutes} from './routes/index.js';
 import {BookRoutes} from './routes/index.js';
 import ErrorHandler from './middlewares/ErrorHandler.js';
 import { limiter } from "./middlewares/rateLimiter.js";
-
+import { BorrowRoutes } from './routes/index.js';
 
 const app = express();
 const PORT = 3000;
@@ -19,6 +19,7 @@ await connectDB();
 
 app.use('/auth', AuthRoutes);
 app.use('/books', BookRoutes);
+app.use('/borrow', BorrowRoutes);
 
 app.get("/", (req, res) => {
     return res.json({ 
