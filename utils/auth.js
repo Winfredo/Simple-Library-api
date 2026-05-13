@@ -13,7 +13,7 @@ export const CompareBcryptPassword = async (password, hashedPassword) => {
 
 export const GenerateAuthToken = (userId, role) => {
   console.log('Generating auth token for userId:', userId, 'with role:', role, "with expiration:", process.env.JWT_ACCESS_EXPIRATION); // Debugging log
-  const accessToken = jwt.sign({ userId, role }, process.env.JWS_ACCESS_SECRET, {
+  const accessToken = jwt.sign({ userId, role }, process.env.JWT_ACCESS_SECRET, {
     expiresIn: process.env.JWT_ACCESS_EXPIRATION || '15m',
   });
   const refreshToken = jwt.sign({ userId, role }, process.env.JWT_REFRESH_SECRET, {
@@ -28,7 +28,7 @@ export const GenerateAuthToken = (userId, role) => {
 
 export const VerifyAuthToken = (token, type = 'access') => {
   try {
-    const secret = type === 'access' ? process.env.JWS_ACCESS_SECRET : process.env.JWT_REFRESH_SECRET;
+    const secret = type === 'access' ? process.env.JWT_ACCESS_SECRET : process.env.JWT_REFRESH_SECRET;
     const decoded = jwt.verify(token, secret);
     const now = Date.now() / 1000;
     console.log('Decoded token:', decoded, { now }); // Debugging log
