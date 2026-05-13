@@ -33,18 +33,21 @@ class AuthService {
   }
 
   //signup logic
-  static async signup({ username, email, password, role }) {
+static async signup({ username, email, password, role }) {
     const isExisting = await this.isUserExisting(email);
     if (isExisting) {
       return null;
     }
     const hassedPassword = await GenerateBcryptPassword(password);
-    const user = await Person.create({
+    await Person.create({
       username,
       email,
       password: hassedPassword,
       role,
     });
+
+    // fetch the user back without the password
+    const user = await Person.findOne({ email }).select("-password");
     return user;
   }
 
