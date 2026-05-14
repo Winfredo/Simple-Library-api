@@ -3,11 +3,15 @@ import BookService from "../services/book.service.js";
 
 const getAllBooks = async (req, res, next) => {
   try {
-    const books = await BookService.getAllBooks();
+    const { search, status, page, limit } = req.query;
+
+    const result = await BookService.getAllBooks({ search, status, page, limit });
+
     res.json({
       success: true,
       message: "Books retrieved successfully",
-      data: books || [],
+      data: result.books,
+      pagination: result.pagination
     });
   } catch (error) {
     return next(error);
