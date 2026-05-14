@@ -1,9 +1,45 @@
 import Book from "../models/Book.js";
 
 class BookService {
-  static async getAllBooks() {
-    const books = await Book.find();
-    return books;
+ static async getAllBooks({ search, status, page, limit }) {
+    const query = {};
+
+    // search by title, author or genre
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { author: { $regex: search, $options: "i" } },
+        { genre: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // filter by status
+    if (status) {
+      query.status = status;
+    }
+
+    // pagination
+    const pageNumber = parseInt(page) || 1;
+    const pageSize = parseInt(limit) || 10;
+    const skip = (pageNumber - 1) * pageSize;
+
+    const totalBooks = await Book.countDocuments(query);
+    const totalPages = Math.ceil(totalBooks / pageSize);
+
+    const books = await Book.find(query)
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 });
+
+    return {
+      books,
+      pagination: {
+        totalBooks,
+        totalPages,
+        currentPage: pageNumber,
+        pageSize,
+      }
+    };
   }
 
   static async createBook({ title, author, genre, publishedYear }) {
