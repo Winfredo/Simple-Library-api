@@ -11,6 +11,7 @@ import {
   checkIfLibrarian,
   checkIfStudent,
 } from "../middlewares/book.middlewares.js";
+import {validateObjectId} from "../middlewares/auth.middlewares.js"
 
 const router = express.Router();
 
@@ -19,12 +20,14 @@ router.post(
   "/:bookId",
   checkIfLoggedIn,
   checkIfStudent,
+  validateObjectId("bookId"),
   borrowBook,
 );
 router.put(
   "/:borrowId/return",
   checkIfLoggedIn,
   checkIfStudent,
+  validateObjectId("borrowId"),
   returnBook,
 );
 router.get(
