@@ -11,7 +11,7 @@ import {
   checkIfLibrarian,
   checkIfStudent,
 } from "../middlewares/book.middlewares.js";
-import {validateObjectId} from "../middlewares/auth.middlewares.js"
+import { validateObjectId } from "../middlewares/auth.middlewares.js";
 
 const router = express.Router();
 
@@ -30,25 +30,10 @@ router.put(
   validateObjectId("borrowId"),
   returnBook,
 );
-router.get(
-  "/my-books",
-  checkIfLoggedIn,
-  checkIfStudent,
-  getStudentBorrows,
-);
+router.get("/my-books", checkIfLoggedIn, checkIfStudent, getStudentBorrows);
 
 // librarian routes
-router.get(
-  "/",
-  checkIfLoggedIn,
-  checkIfLibrarian,
-  getAllBorrows,
-);
-router.get(
-  "/overdue",
-  checkIfLoggedIn,
-  checkIfLibrarian,
-  getOverdueBorrows,
-);
+router.get("/", checkIfLoggedIn, checkIfLibrarian, getAllBorrows);
+router.get("/overdue", checkIfLoggedIn, checkIfLibrarian, getOverdueBorrows);
 
 export default router;
