@@ -11,14 +11,17 @@ import { limiter } from "./middlewares/rateLimiter.js";
 import { BorrowRoutes } from './routes/index.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 dotenv.config({ quiet: true })
 
 app.use(express.json());
 app.use(cors());
 app.use(limiter);
 app.use(helmet());
-app.use(mongoSanitize());
+app.use(mongoSanitize({
+  allowDots: true,
+  replaceWith: '_'
+}));
 await connectDB();
 
 app.use('/auth', AuthRoutes);
