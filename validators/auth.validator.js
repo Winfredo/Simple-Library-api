@@ -15,7 +15,7 @@ export const signupSchema = joi.object({
         'string.pattern.base': 'Password must contain at least one uppercase letter and one special character',
         'string.empty': 'Password is required',
     }),
-    role: joi.string().valid('librarian', 'student').messages({
+    role: joi.string().valid('librarian', 'student').default('student').messages({
         'string.only': 'Role must be either librarian or student',
     })
 
