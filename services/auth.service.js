@@ -43,7 +43,7 @@ static async signup({ username, email, password, role }) {
       username,
       email,
       password: hassedPassword,
-      role,
+      role: "student",
     });
 
     // fetch the user back without the password
