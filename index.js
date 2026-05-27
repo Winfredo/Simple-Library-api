@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
-import mongoSanitize from 'express-mongo-sanitize';
 import connectDB from './config/db.js';
 import {AuthRoutes} from './routes/index.js';
 import {BookRoutes} from './routes/index.js';
@@ -18,10 +17,6 @@ app.use(express.json());
 app.use(cors());
 app.use(limiter);
 app.use(helmet());
-app.use(mongoSanitize({
-  allowDots: true,
-  replaceWith: '_'
-}));
 await connectDB();
 
 app.use('/auth', AuthRoutes);
