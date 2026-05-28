@@ -50,12 +50,19 @@ class BorrowService {
   }
 
 static async getStudentBorrows(studentId) {
-    const borrows = await Borrow.find({ student: studentId })
-      .populate("book", "title author genre")
-      .sort({ borrowedAt: -1 });
+  const now = new Date();
 
-    return borrows;
-  }
+  await Borrow.updateMany(
+    { student: studentId, status: "active", dueDate: { $lt: now } },
+    { status: "overdue" }
+  );
+
+  const borrows = await Borrow.find({ student: studentId })
+    .populate("book", "title author genre")
+    .sort({ borrowedAt: -1 });
+
+  return borrows;
+}
 
   static async getAllBorrows() {
     const borrows = await Borrow.find()
