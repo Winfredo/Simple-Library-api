@@ -21,7 +21,7 @@ await connectDB();
 
 app.use('/auth', AuthRoutes);
 app.use('/books', BookRoutes);
-app.use('/borrow', BorrowRoutes);
+app.use('/borrows', BorrowRoutes);
 
 app.get("/", (req, res) => {
     return res.json({ 
