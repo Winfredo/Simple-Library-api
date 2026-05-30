@@ -51,7 +51,7 @@ class BorrowService {
 
 static async getStudentBorrows(studentId) {
   const now = new Date();
-
+console.log("Fetching borrows for studentId:", studentId);
   await Borrow.updateMany(
     { student: studentId, status: "active", dueDate: { $lt: now } },
     { status: "overdue" }
