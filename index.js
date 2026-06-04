@@ -8,6 +8,7 @@ import {BookRoutes} from './routes/index.js';
 import ErrorHandler from './middlewares/ErrorHandler.js';
 import { limiter } from "./middlewares/rateLimiter.js";
 import { BorrowRoutes } from './routes/index.js';
+import UserRoutes from "./routes/user.routes.js";
 
 const app = express();
 const PORT = 4000;
@@ -22,6 +23,7 @@ await connectDB();
 app.use('/auth', AuthRoutes);
 app.use('/books', BookRoutes);
 app.use('/borrows', BorrowRoutes);
+app.use('/users', UserRoutes);
 
 app.get("/", (req, res) => {
     return res.json({ 
