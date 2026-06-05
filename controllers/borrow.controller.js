@@ -38,7 +38,8 @@ const returnBook = async (req, res, next) => {
 const getStudentBorrows = async (req, res, next) => {
   try {
     const studentId = req.user.id;
-
+    console.log("req.user:", req.user);
+    console.log("studentId:", studentId);
     const borrows = await BorrowService.getStudentBorrows(studentId);
 
     return res.status(200).json({
