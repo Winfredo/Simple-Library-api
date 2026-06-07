@@ -16,8 +16,6 @@ class BorrowService {
     dueDate.setDate(dueDate.getDate() + 10);
     // dueDate.setMinutes(dueDate.getMinutes() + 1);
 
-    
-    
     const borrowRecord = await Borrow.create({
         student: studentId,
         book: bookId,
