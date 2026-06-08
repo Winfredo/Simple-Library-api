@@ -17,18 +17,17 @@ class BorrowService {
     // dueDate.setMinutes(dueDate.getMinutes() + 1);
 
     const borrowRecord = await Borrow.create({
-        student: studentId,
-        book: bookId,
-        dueDate: dueDate
-    })
-    
+      student: studentId,
+      book: bookId,
+      dueDate: dueDate,
+    });
+
     await Book.findByIdAndUpdate(bookId, { status: "borrowed" }, { new: true });
 
     return borrowRecord;
   }
 
-
-    static async returnBook(borrowId, studentId) {
+  static async returnBook(borrowId, studentId) {
     // find the borrow record
     const borrow = await Borrow.findById(borrowId);
     if (!borrow) throw new Error("Borrow record not found");
@@ -49,20 +48,20 @@ class BorrowService {
     return borrow;
   }
 
-static async getStudentBorrows(studentId) {
-  const now = new Date();
-console.log("Fetching borrows for studentId:", studentId);
-  await Borrow.updateMany(
-    { student: studentId, status: "active", dueDate: { $lt: now } },
-    { status: "overdue" }
-  );
+  static async getStudentBorrows(studentId) {
+    const now = new Date();
+    console.log("Fetching borrows for studentId:", studentId);
+    await Borrow.updateMany(
+      { student: studentId, status: "active", dueDate: { $lt: now } },
+      { status: "overdue" },
+    );
 
-  const borrows = await Borrow.find({ student: studentId })
-    .populate("book", "title author genre")
-    .sort({ borrowedAt: -1 });
+    const borrows = await Borrow.find({ student: studentId })
+      .populate("book", "title author genre")
+      .sort({ borrowedAt: -1 });
 
-  return borrows;
-}
+    return borrows;
+  }
 
   static async getAllBorrows() {
     const borrows = await Borrow.find()
@@ -73,12 +72,12 @@ console.log("Fetching borrows for studentId:", studentId);
     return borrows;
   }
 
-   static async getOverdueBorrows() {
+  static async getOverdueBorrows() {
     const now = new Date();
 
     await Borrow.updateMany(
       { status: "active", dueDate: { $lt: now } },
-      { status: "overdue" }
+      { status: "overdue" },
     );
 
     const overdue = await Borrow.find({ status: "overdue" })
@@ -88,7 +87,6 @@ console.log("Fetching borrows for studentId:", studentId);
 
     return overdue;
   }
-
 }
 
 export default BorrowService;
